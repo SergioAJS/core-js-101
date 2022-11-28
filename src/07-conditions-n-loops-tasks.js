@@ -275,8 +275,25 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const str = ccn.toString().split('');
+  const checkDigit = str.pop();
+  const res = str.reverse().map((item) => parseInt(item, 10));
+  const x = res.map((item, index) => {
+    if (index % 2 === 0) {
+      return item * 2;
+    }
+    return item;
+  });
+  const y = x.map((item) => {
+    if (item > 9) {
+      return item - 9;
+    }
+    return item;
+  });
+  const checkArrSum = y.reduce((acc, item) => acc + item);
+  const checkSum = (10 - (checkArrSum % 10)) % 10;
+  return checkSum === parseInt(checkDigit, 10);
 }
 
 /**
